@@ -643,6 +643,10 @@ window.background.chromium {
 // Firefox
 #MozillaGtkWidget.background {
   button { font-weight: initial; }
+
+  @if $variant == 'light' {
+    scrollbar slider { background-color: darken($scrollbar_slider_color, 20%); }
+  }
 }
 @if $variant == 'dark' {
   #MozillaGtkWidget {
@@ -741,3 +745,11 @@ terminal-window notebook > header {
     }
   }
 }
+
+// GNOME Console/kgx
+// FIXME: Does not work for some unknown reason
+//.terminal-window {
+//  &.root {}
+//  &.remote {}
+//}
+
