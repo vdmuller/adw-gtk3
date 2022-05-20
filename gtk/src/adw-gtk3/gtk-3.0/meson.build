@@ -25,6 +25,7 @@ gtk3_scss_dependencies = [
   '_defaults.scss',
   '_colors-public.scss',
   '_custom.scss',
+  '_libadwaita-colors.scss',
   '_colors.scss',
   '_common.scss',
   '_drawing.scss',
