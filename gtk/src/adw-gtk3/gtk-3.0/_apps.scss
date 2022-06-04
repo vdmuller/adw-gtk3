@@ -105,6 +105,9 @@
     border-left-color: $linked_border;
   }
 
+  // Location entry button
+  .linked entry ~ .image-button:not(:hover):not(:checked):not(:active):not(.model) { @extend %colored_buttons; }
+
   .view .dim-label { color: transparentize($fg_color, 0.45); }
 
   // Add a border around thumbnails
@@ -519,6 +522,15 @@ window.background.chromium {
   @if $variant == 'light' {
     scrollbar slider { background-color: darken($scrollbar_slider_color, 20%); }
   }
+
+  // https://github.com/lassekongo83/adw-gtk3/issues/130
+  menuitem {
+    check,
+    radio {
+      min-height: 12px;
+      min-width: 12px;
+    }
+  }
 }
 @if $variant == 'dark' {
   #MozillaGtkWidget {
@@ -560,7 +572,7 @@ dzlsuggestionpopover > revealer > box > elastic > scrolledwindow > viewport > li
   }
 }
 
-// Phosh squeekboard
+// Phosh
 // From: https://gitlab.gnome.org/World/Phosh/squeekboard/-/tree/master/data
 sq_view {
   font-size: 1.5em;
