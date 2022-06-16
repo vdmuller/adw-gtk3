@@ -1,10 +1,11 @@
 $variant: 'dark';
+$contrast: 'normal';
 
 @import 'functions';
 @import 'palette';
 @import 'defaults';
-@import 'colors';
 @import 'libadwaita-colors';
+@import 'colors';
 @import 'drawing';
 @import 'common';
 @import 'colors-public';
