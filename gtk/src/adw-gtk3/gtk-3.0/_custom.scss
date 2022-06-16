@@ -1,32 +1,33 @@
 // Custom added styles
 
-$linked_border: $border_color; //if($variant == 'light', gtkmix(black, $borders_color, 6.7%), gtkmix(white, $borders_color, 5%));
-$linked_border_checked: $linked_border; //if($variant == 'light', gtkmix(black, $linked_border, 17.7%), gtkmix(white, $linked_border, 14.7%));
-$backdrop_linked_border: $linked_border; //if($variant == 'light', $backdrop_borders_color, gtkmix(black, $backdrop_borders_color, 5%));
+// TODO: Not needed, clean up
+$linked_border: $border_color;
+$linked_border_checked: $linked_border;
+$backdrop_linked_border: $linked_border;
 
-// Trying to mimic the headerbar button colors from the libadwaita theme when used in gtk4-widget-factory
+// Trying to mimic the libadwaita buttons without using gtkalpha for performance reasons
 %colored_buttons {
   @include button(normal, $headerbar_color, $fg_color);
   &:backdrop {
-    @include button(backdrop, $bg_color, $backdrop_fg_color);
+    @include button(backdrop, $bg_color, $fg_color);
   }
   &:hover {
     @include button(hover, $headerbar_color, $fg_color);
     &:backdrop {
-      @include button(backdrop, $bg_color, $backdrop_fg_color);
+      @include button(backdrop, $bg_color, $fg_color);
     }
   }
   &:active, &:checked {
     @include button(active, $headerbar_color, $fg_color);
     &:backdrop {
-      @include button(normal, $bg_color, $backdrop_fg_color); //FIXME
+      @include button(backdrop-active, $bg_color, $fg_color);
     }
   }
   &:disabled {
-    @include button(insensitive, $headerbar_color, $insensitive_fg_color);
+    @include button(insensitive, $headerbar_color, $fg_color);
   }
   &:backdrop:disabled {
-    @include button(backdrop-insensitive, $bg_color, $backdrop_insensitive_color);
+    @include button(backdrop-insensitive, $bg_color, $fg_color);
   }
 
   &.default:not(:backdrop):not(.suggested-action):not(.destructive-action) {
@@ -58,6 +59,14 @@ $backdrop_linked_border: $linked_border; //if($variant == 'light', $backdrop_bor
     @else {
       @include button(backdrop, gtkshade($bg_color, 1.06), $backdrop_fg_color);
     }
+    &:checked, &:active {
+      @if $variant == 'light' {
+        @include button(active, gtkshade($headerbar_color, 1.015), $backdrop_fg_color);
+      }
+      @else {
+        @include button(active, gtkshade($headerbar_color, 0.9), $backdrop_fg_color);
+      }
+    }
   }
 
   &:active, &:checked, &:active:hover, &:checked:hover {
@@ -66,6 +75,14 @@ $backdrop_linked_border: $linked_border; //if($variant == 'light', $backdrop_bor
     }
     @else {
       @include button(hover, gtkshade($headerbar_color, 0.9), $fg_color);
+    }
+    &:backdrop {
+      @if $variant == 'light' {
+        @include button(active, gtkshade($bg_color, 1.015), $backdrop_fg_color);
+      }
+      @else {
+        @include button(active, gtkshade($bg_color, 0.9), $backdrop_fg_color);
+      }
     }
   }
 
