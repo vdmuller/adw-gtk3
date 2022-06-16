@@ -8,6 +8,8 @@
 // These are the colors apps are can override. We define the defaults here and
 // define variables for them in _colors.scss
 
+// adw-gtk3 note: For performance reasons we shouldn't use transparentize(black, .2) on some of the fg_colors
+
 // The main accent color and the matching text value
 @define-color accent_bg_color @blue_3;
 @define-color accent_fg_color white;
@@ -33,7 +35,7 @@
 
 // Window
 @define-color window_bg_color #{if($variant == 'light', #fafafa, #242424)};
-@define-color window_fg_color #{if($variant == 'light', transparentize(black, .2), white)};
+@define-color window_fg_color #{if($variant == 'light', #111111, white)};
 
 // Views - e.g. text view or tree view
 @define-color view_bg_color #{if($variant == 'light', #ffffff, #1e1e1e)};
@@ -41,7 +43,7 @@
 
 // Header bar, search bar, tab bar
 @define-color headerbar_bg_color #{if($variant == 'light', #ebebeb, #303030)};
-@define-color headerbar_fg_color #{if($variant == 'light', transparentize(black, .2), white)};
+@define-color headerbar_fg_color #{if($variant == 'light', #111111, white)};
 @define-color headerbar_border_color #{if($variant == 'light', transparentize(black, .2), white)};
 @define-color headerbar_backdrop_color @window_bg_color;
 @define-color headerbar_shade_color #{if($variant == 'light', transparentize(black, .93), transparentize(black, .64))};
