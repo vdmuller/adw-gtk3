@@ -37,7 +37,7 @@ window.flat headerbar {
 
 .h4,
 .category-label {
-  color: rgba($fg_color, 0.8);
+  color: gtkalpha($fg_color, 0.2);
   font-weight: 700;
 }
 
@@ -68,8 +68,8 @@ list .h4 {
     border-bottom-width: 1px;
     border-left-width: 0;
     border-radius: 0;
-    border-bottom-color: darken($borders_color, 35%);
-    background-color: darken($base_color, 15%);
+    border-bottom-color: $borders_color;
+    background-color: gtkmix(black, $base_color, 15%);
 
     &:first-child { border-radius: $button_radius 0 0; }
     &:last-child { border-radius: 0 $button_radius 0 0; }
@@ -80,15 +80,15 @@ list .h4 {
 
   .empty-block {
     border-bottom-width: 1px;
-    border-bottom-color: darken($borders_color, 40%);
-    background-color: darken($base_color, 5%);
+    border-bottom-color: $borders_color;
+    background-color: gtkmix(black, $base_color, 5%);
 
     image { color: black; }
   }
 
   .app {
     border-bottom-width: 1px;
-    border-bottom-color: darken($purple_1, 30%);
+    border-bottom-color: gtkmix(black, $purple_1, 30%);
     background-color: $purple_1;
 
     image { color: white; }
@@ -96,7 +96,7 @@ list .h4 {
 
   .audio {
     border-bottom-width: 1px;
-    border-bottom-color: darken($orange_2, 20%);
+    border-bottom-color: gtkmix(black, $orange_2, 20%);
     background-color: $orange_2;
 
     image { color: black; }
@@ -104,7 +104,7 @@ list .h4 {
 
   .files {
     border-bottom-width: 1px;
-    border-bottom-color: darken($blue_1, 20%);
+    border-bottom-color: gtkmix(black, $blue_1, 20%);
     background-color: $blue_1;
 
     image { color: black; }
@@ -112,7 +112,7 @@ list .h4 {
 
   .photo {
     border-bottom-width: 1px;
-    border-bottom-color: darken($green_2, 30%);
+    border-bottom-color: gtkmix(black, $green_2, 30%);
     background-color: $green_2;
 
     image { color: black; }
@@ -120,7 +120,7 @@ list .h4 {
 
   .video {
     border-bottom-width: 1px;
-    border-bottom-color: darken($red_1, 20%);
+    border-bottom-color: gtkmix(black, $red_1, 20%);
     background-color: $red_1;
 
     image { color: white; }
@@ -144,9 +144,9 @@ list .h4 {
     // sass-lint:disable-block indentation
     border: none;
     box-shadow: 
-      inset 0 -2px rgba($dark_2, 0.5),
-      inset 1px 0 rgba($dark_2, 0.5),
-      inset -1px 0 rgba($dark_2, 0.5);
+      inset 0 -2px gtkalpha($dark_2, 0.5),
+      inset 1px 0 gtkalpha($dark_2, 0.5),
+      inset -1px 0 gtkalpha($dark_2, 0.5);
   }
 
   .swap { 
@@ -314,7 +314,7 @@ paper,
     &:selected:backdrop,
     &:selected:hover:backdrop {
       background-color: transparentize(black, 0.8);
-      color: darken($bg_color, 5%);
+      color: gtkmix(black, $bg_color, 5%);
     }
   }
 
@@ -354,7 +354,7 @@ scale {
   &.temperature trough {
     background-image: linear-gradient(
       to right,
-      rgba($blue_1, 0.4),
+      gtkalpha($blue_1, 0.6),
       $light_4,
       $yellow_1
     );
@@ -363,7 +363,7 @@ scale {
   &.temperature:dir(rtl) trough {
     background-image: linear-gradient(
       to left,
-      rgba($blue_1, 0.4),
+      gtkalpha($blue_1, 0.6),
       $light_4,
       $yellow_1
     );
@@ -372,15 +372,15 @@ scale {
   &.warmth trough {
     background-image: linear-gradient(
       to right,
-      rgba($yellow_1, 0.4),
-      rgba($yellow_5, 0.6)
+      gtkalpha($yellow_1, 0.6),
+      gtkalpha($yellow_5, 0.4)
     );
   }
   &.warmth:dir(rtl) trough {
     background-image: linear-gradient(
       to left,
-      rgba($yellow_1, 0.4),
-      rgba($yellow_5, 0.6)
+      gtkalpha($yellow_1, 0.6),
+      gtkalpha($yellow_5, 0.4)
     );
   }
 }
@@ -414,7 +414,7 @@ label.terminal {
 
   .dim-label { @extend .dim-label; }
 
-  .h1, .h3 { color: rgba($fg_color, 0.8); }
+  .h1, .h3 { color: gtkalpha($fg_color, 0.2); }
 }
 
 // Back button
@@ -466,9 +466,9 @@ button.back-button.text-button {
 
 // Checkerboard
 .checkerboard {
-  box-shadow: 0px 1px 2px 0px transparentize($borders_color, 0.5),
-              0px 0px 0px 1px transparentize($borders_color, 0.5),
-              0px 2px 0px 0px transparentize($borders_color, 0.5);
+  box-shadow: 0px 1px 2px 0px gtkalpha($borders_color, 0.5),
+              0px 0px 0px 1px gtkalpha($borders_color, 0.5),
+              0px 2px 0px 0px gtkalpha($borders_color, 0.5);
   border-radius: 2px;
   background: url('assets/Checkerboard.png') repeat;
 }
