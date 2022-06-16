@@ -1,7 +1,3 @@
-@function gtkalpha($c,$a) {
-  @return unquote("alpha(#{$c},#{$a})");
-}
-
 $ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 $asset_suffix: if($variant=='dark', '-dark', '');
 $backdrop_transition: 200ms ease-out;
@@ -85,12 +81,12 @@ $_switch_margin: if($_sizevariant=='default', 9px, 7px);
 
   &:hover {
     color: $fg_color;
-    background-color: lighten($bg_color, 10%);
+    background-color: gtkmix(black, $bg_color, 10%);
   }
 
   &:active {
     color: $fg_color;
-    background-color: darken($bg_color, 10%);
+    background-color: gtkmix(black, $bg_color, 10%);
   }
 
   &:disabled {
@@ -138,14 +134,14 @@ textview {
   }
 }
 
-textview border { background-color: mix($bg_color, $base_color, 50%); }
+textview border { background-color: gtkmix($bg_color, $base_color, 50%); }
 
 iconview { @extend .view; }
 
 .rubberband,
 rubberband {
-  border: 1px solid darken($selected_bg_color, 10%);
-  background-color: transparentize(darken($selected_bg_color, 10%), 0.8);
+  border: 1px solid $accent_color;
+  background-color: gtkalpha($accent_color, 0.2);
 }
 
 flowbox {
@@ -168,7 +164,7 @@ flowbox {
   border-radius: 0;
   padding: 0;
   
-  &:backdrop { background-color: if($variant=='light', transparent, darken($backdrop_base_color,5%)); }
+  &:backdrop { background-color: if($variant=='light', transparent, gtkmix(black, $backdrop_base_color, 5%)); }
   &:active, &:selected { background-color: if($variant=='light', transparent, $selected_bg_color); }
   &:disabled { background-color: if($variant=='light', transparent, $insensitive_bg_color); }
 }
@@ -207,8 +203,8 @@ label {
 
   &.error {
     color: $error_color;
-    &:disabled { color: transparentize($error_color,0.5); }
-    &:disabled:backdrop { color: transparentize($error_color,0.6); }
+    &:disabled { color: gtkalpha($error_color,0.5); }
+    &:disabled:backdrop { color: gtkalpha($error_color,0.4); }
   }
 }
 
@@ -232,7 +228,7 @@ assistant {
 
   .sidebar label { padding: 6px 12px; }
 
-  .sidebar label.highlight { background-color: mix($bg_color, $fg_color, 80%); }
+  .sidebar label.highlight { background-color: gtkmix($bg_color, $fg_color, 80%); }
 }
 
 %osd,
@@ -366,13 +362,13 @@ entry {
     }
 
     image { // entry icons colors
-      color: mix($fg_color, $base_color, 80%);
+      color: gtkmix($fg_color, $base_color, 80%);
 
       &:hover { color: $fg_color; }
 
       &:active { color: $selected_bg_color; }
 
-      &:backdrop { color: mix($backdrop_fg_color, $backdrop_base_color, 80%); }
+      &:backdrop { color: gtkmix($backdrop_fg_color, $backdrop_base_color, 80%); }
     }
 
     &:drop(active) {
@@ -428,14 +424,14 @@ entry {
     // brighter border between linked entries
     &:not(:disabled) + entry:not(:disabled),
     &:not(:disabled) + %entry:not(:disabled) {
-      border-top-color: mix($borders_color, $base_color, 30%);
+      border-top-color: gtkmix($borders_color, $base_color, 30%);
 
-      &:backdrop { border-top-color: mix($backdrop_borders_color, $backdrop_base_color, 30%); }
+      &:backdrop { border-top-color: gtkmix($backdrop_borders_color, $backdrop_base_color, 30%); }
     }
 
     // brighter border between linked insensitive entries
     &:disabled + %entry:disabled,
-    &:disabled + entry:disabled { border-top-color: mix($borders_color, $base_color, 30%); }
+    &:disabled + entry:disabled { border-top-color: gtkmix($borders_color, $base_color, 30%); }
 
     // color back the top border of a linked focused entry following another entry.
     // :not(:only-child) is a specificity bump hack.
@@ -515,22 +511,22 @@ treeview entry {
   $_entry_tag_color: if($variant=='light', $selected_fg_color, $base_color);
   color: $_entry_tag_color;
 
-  $_entry_tag_bg: if($variant=='light', $selected_bg_color, mix($fg_color, $base_color, 50%));
+  $_entry_tag_bg: if($variant=='light', $selected_bg_color, gtkmix($fg_color, $base_color, 50%));
   background-color: $_entry_tag_bg;
 
   &:hover {
-    background-color: lighten($_entry_tag_bg, 10%);
+    background-color: gtkmix(white, $_entry_tag_bg, 10%);
   }
 
   :backdrop & {
     color: $backdrop_base_color;
     background-color: if($variant=='light', $selected_bg_color,
-                                            mix($backdrop_fg_color, $backdrop_base_color, 50%));
+                                            gtkmix($backdrop_fg_color, $backdrop_base_color, 50%));
   }
 
   &.button {
     background-color: transparent;
-    color: transparentize($_entry_tag_color, 0.3);
+    color: gtkalpha($_entry_tag_color, 0.7);
   }
 
   :not(:backdrop) &.button {
@@ -540,7 +536,7 @@ treeview entry {
     }
     &:active {
       background-color: $_entry_tag_bg;
-      color: transparentize($_entry_tag_color, 0.3);
+      color: gtkalpha($_entry_tag_color, 0.7);
     }
   }
 }
@@ -550,7 +546,7 @@ treeview entry {
 // ***********
 // stuff for .needs-attention
 $_dot_color: if($variant=='light', $selected_bg_color,
-                                   lighten($selected_bg_color,15%));
+                                   gtkmix(white,$selected_bg_color,15%));
 @keyframes needs_attention {
   from {
     background-image: -gtk-gradient(radial,
@@ -807,7 +803,7 @@ button {
         &:backdrop, &:disabled, &:backdrop:disabled {
           @include button(undecorated);
 
-          color: transparentize($b_color, 0.2);
+          color: gtkalpha($b_color, 0.8);
         }
       }
 
@@ -928,7 +924,7 @@ button {
 
 %needs_attention {
   animation: needs_attention 150ms ease-in;
-  $_dot_shadow: _text_shadow_color();
+  $_dot_shadow: $fg_color; //_text_shadow_color();
   $_dot_shadow_r: if($variant=='light',0.5,0.45);
   background-image: -gtk-gradient(radial,
                                   center center, 0,
@@ -1002,8 +998,8 @@ toolbar.inline-toolbar toolbutton {
 }
 
 %linked_middle {
-  border-left-color: if($variant == 'light', darken($borders_color, 5.7%), lighten($borders_color, 5%));
-  border-right-color: if($variant == 'light', darken($borders_color, 5.7%), lighten($borders_color, 5%));
+  border-left-color: $borders_color;
+  border-right-color: $borders_color;
   border-right-style: none;
   border-radius: 0;
   -gtk-outline-radius: 0;
@@ -1111,8 +1107,8 @@ toolbar.inline-toolbar toolbutton {
   background-color: transparent;
   background-image: none;
   border-color: transparent;
-  box-shadow: inset 0 1px transparentize(white, 1),
-              0 1px transparentize(white, 1);
+  box-shadow: inset 0 1px gtkalpha(white, 0),
+              0 1px gtkalpha(white, 0);
   text-shadow: none;
   -gtk-icon-shadow: none;
 }
@@ -1173,7 +1169,7 @@ button.color {
 // tone down as per new designs, see issue #1473, #1748
 list row button.image-button:not(.flat) {
   @extend %undecorated_button;
-  border: 1px solid transparentize($borders_color, .5);
+  border: 1px solid gtkalpha($borders_color, .5);
   &:hover { @include button(hover); }
   &:active,
   &:checked { @include button(active); }
@@ -1190,29 +1186,29 @@ list row button.image-button:not(.flat) {
   &:visited {
     color: $link_visited_color;
 
-    *:selected & { color: mix($selected_fg_color, $link_visited_color, 60%); }
+    *:selected & { color: gtkmix($selected_fg_color, $link_visited_color, 60%); }
   }
 
   &:hover {
-    $_fg: lighten($link_color, 10%);
+    $_fg: gtkmix(white, $link_color, 10%);
     color: $_fg;
 
-    *:selected & { color: mix($selected_fg_color, $_fg, 90%); }
+    *:selected & { color: gtkmix($selected_fg_color, $_fg, 90%); }
   }
 
   &:active {
     color: $link_color;
 
-    *:selected & { color: mix($selected_fg_color, $link_color, 80%); }
+    *:selected & { color: gtkmix($selected_fg_color, $link_color, 80%); }
   }
 
-  &:disabled, &:disabled:backdrop { color: transparentize(desaturate($link_color, 100%), 0.2); }
+  &:disabled, &:disabled:backdrop { color: gtkalpha(gtkmix(white,black,50%), 0.8); } //gtkalpha(desaturate($link_color, 100%), 0.8);
 
-  &:backdrop { &:backdrop:hover, &:backdrop:hover:selected, & { color: transparentize($link_color, 0.1); }}
+  &:backdrop { &:backdrop:hover, &:backdrop:hover:selected, & { color: gtkalpha($link_color, 0.9); }}
 
   @at-root %link_selected,
   &:selected,
-  *:selected & { color: mix($selected_fg_color, $link_color, 80%); }
+  *:selected & { color: gtkmix($selected_fg_color, $link_color, 80%); }
 }
 
 button:link,
@@ -1274,7 +1270,7 @@ spinbutton {
       margin: 0;
       padding-bottom: 0;
       padding-top: 0;
-      color: mix($fg_color, $base_color, 90%);
+      color: gtkmix($fg_color, $base_color, 90%);
       background-image: none;
       border-style: none none none solid;
       border-color: $borders_color;
@@ -1302,7 +1298,7 @@ spinbutton {
         @include button(backdrop);
         //color: mix($backdrop_fg_color, $backdrop_base_color, 90%);
         //background-color: transparent;
-        border-color: transparentize($backdrop_borders_color, 0.7);
+        border-color: gtkalpha($backdrop_borders_color, 0.3);
         transition: $backdrop_transition;
       }
 
@@ -1333,7 +1329,7 @@ spinbutton {
 
       color: $osd_fg_color;
       border-style: none none none solid;
-      border-color: transparentize($osd_borders_color, 0.3);
+      border-color: gtkalpha($osd_borders_color, 0.7);
       border-radius: 0;
       box-shadow: none;
       -gtk-icon-shadow: 0 1px black;
@@ -1344,8 +1340,8 @@ spinbutton {
         @include button(undecorated);
 
         color: $osd_fg_color;
-        border-color: transparentize(opacify($osd_borders_color, 1), 0.5);
-        background-color: transparentize($osd_fg_color, 0.9);
+        border-color: gtkalpha(opacify($osd_borders_color, 1), 0.5);
+        background-color: gtkalpha($osd_fg_color, 0.1);
         -gtk-icon-shadow: 0 1px black;
         box-shadow: none;
       }
@@ -1354,7 +1350,7 @@ spinbutton {
         @include button(undecorated);
 
         color: $osd_fg_color;
-        border-color: transparentize(opacify($osd_borders_color, 1), 0.5);
+        border-color: gtkalpha(opacify($osd_borders_color, 1), 0.5);
         -gtk-icon-shadow: none;
         box-shadow: none;
       }
@@ -1363,7 +1359,7 @@ spinbutton {
         @include button(undecorated);
 
         color: $osd_insensitive_fg_color;
-        border-color: transparentize(opacify($osd_borders_color, 1), 0.5);
+        border-color: gtkalpha(opacify($osd_borders_color, 1), 0.5);
         -gtk-icon-shadow: none;
         box-shadow: none;
       }
@@ -1566,7 +1562,7 @@ searchbar > revealer > box {
 %darkbar {
   border-style: solid;
   border-color: $borders_color;
-  $_bg: mix($bg_color, $borders_color, 70%);
+  $_bg: gtkmix($bg_color, $borders_color, 70%);
   background-color: $_bg;
 
   &:backdrop {
@@ -1629,7 +1625,7 @@ headerbar {
 
   .selection-mode &,
   &.selection-mode {
-    $_hc: mix($top_hilight, $suggested_bg_color, 50%); // hilight color
+    $_hc: gtkmix($top_hilight, $suggested_bg_color, 50%); // hilight color
 
     color: $selected_fg_color;
     border-color: $suggested_border_color;
@@ -1640,7 +1636,7 @@ headerbar {
     &:backdrop {
       background-color: $suggested_bg_color;
       background-image: none;
-      box-shadow: inset 0 1px mix($top_hilight, $suggested_bg_color, 60%);
+      box-shadow: inset 0 1px gtkmix($top_hilight, $suggested_bg_color, 60%);
       
       label { 
         text-shadow: none;
@@ -1739,8 +1735,8 @@ headerbar {
 
     .selection-menu {
       &:backdrop, & {
-        border-color: transparentize($suggested_bg_color, 1);
-        background-color: transparentize($suggested_bg_color, 1);
+        border-color: gtkalpha($suggested_bg_color, 0);
+        background-color: gtkalpha($suggested_bg_color, 0);
         background-image: none;
         box-shadow: none;
         min-height: 20px;
@@ -1750,7 +1746,7 @@ headerbar {
 
         .arrow {
           -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
-          color: transparentize($selected_fg_color,0.5);
+          color: gtkalpha($selected_fg_color,0.5);
           -gtk-icon-shadow: none;
         }
       }
@@ -1907,14 +1903,14 @@ headerbar { // headerbar border rounding
 
 window.devel {
   headerbar.titlebar:not(.selection-mode) {
-    $c: darken($bg_color, 10%);
+    $c: gtkmix(black, $bg_color, 10%);
     $gradient: cross-fade(10% -gtk-icontheme("system-run-symbolic"), image(transparent)) 90% 0/256px 256px no-repeat,
-               linear-gradient(to right, transparent 65%, transparentize($selected_bg_color, 0.8)),
-               linear-gradient(to top, darken($c, 3%), $c 3px, lighten($c, 6%));
+               linear-gradient(to right, transparent 65%, gtkalpha($selected_bg_color, 0.2)),
+               linear-gradient(to top, gtkmix(black, $c, 3%), $c 3px, gtkmix(white, $c, 6%));
     @if $variant == 'dark' {
       $gradient: cross-fade(10% -gtk-icontheme("system-run-symbolic"), image(transparent)) 90% 0/256px 256px no-repeat,
-                 linear-gradient(to right, transparent 65%, transparentize($selected_bg_color, 0.9)),
-                 linear-gradient(to top, lighten($c, 3%) 3px, lighten($c, 5%));
+                 linear-gradient(to right, transparent 65%, gtkalpha($selected_bg_color, 0.1)),
+                 linear-gradient(to top, gtkmix(black, $c, 3%) 3px, gtkmix(white, $c, 5%));
     }
 
     background: $bg_color $gradient;
@@ -1969,7 +1965,7 @@ filechooser .path-bar.linked > button {
 // * Tree Views *
 // **************
 
-$_treeview_borders_color: if($variant=='light',mix($borders_color, $base_color,80%),mix($fg_color, $base_color, 20%));
+$_treeview_borders_color: if($variant=='light',gtkmix($borders_color, $base_color,80%),gtkmix($fg_color, $base_color, 20%));
 
 treeview.view {
   @at-root * {
@@ -1981,7 +1977,7 @@ treeview.view {
     -GtkTreeView-expander-size: 16;
    }
 
-  border-left-color: mix($fg_color, $base_color, 50%); // this is actually the tree lines color,
+  border-left-color: gtkmix($fg_color, $base_color, 50%); // this is actually the tree lines color,
   border-top-color: $bg_color;                         // while this is the grid lines color, better then nothing
 
   rubberband { @extend rubberband; } // to avoid borders being overridden by the previously set props
@@ -1994,8 +1990,8 @@ treeview.view {
     }
 
     &:backdrop, & {
-      border-left-color: mix($selected_fg_color, $selected_bg_color, 50%);
-      border-top-color: transparentize($fg_color, 0.9); // doesn't work unfortunatelly
+      border-left-color: gtkmix($selected_fg_color, $selected_bg_color, 50%);
+      border-top-color: gtkalpha($fg_color, 0.1); // doesn't work unfortunatelly
     }
   }
 
@@ -2003,8 +1999,8 @@ treeview.view {
     color: $insensitive_fg_color;
 
     &:selected {
-      color: mix($selected_fg_color, $selected_bg_color, 40%);
-      &:backdrop { color: mix($backdrop_selected_fg_color, $selected_bg_color, 30%); }
+      color: gtkmix($selected_fg_color, $selected_bg_color, 40%);
+      &:backdrop { color: gtkmix($backdrop_selected_fg_color, $selected_bg_color, 30%); }
     }
 
     &:backdrop { color: $backdrop_insensitive_color; }
@@ -2014,11 +2010,11 @@ treeview.view {
     min-height: 2px;
     color: $bg_color;
 
-    &:backdrop { color: transparentize($bg_color, 0.9); }
+    &:backdrop { color: gtkalpha($bg_color, 0.1); }
   }
 
   &:backdrop {
-    border-left-color: mix($backdrop_fg_color, $backdrop_bg_color, 50%);
+    border-left-color: gtkmix($backdrop_fg_color, $backdrop_bg_color, 50%);
     border-top: $backdrop_bg_color;
   }
   &:drop(active) {
@@ -2036,21 +2032,21 @@ treeview.view {
 
     &:dir(rtl) { -gtk-icon-source: -gtk-icontheme('pan-end-symbolic-rtl'); }
 
-    color: mix($text_color, $base_color, 70%);
+    color: gtkmix($text_color, $base_color, 70%);
 
     &:hover { color: $text_color; }
 
     &:selected {
-      color: mix($selected_fg_color, $selected_bg_color, 70%);
+      color: gtkmix($selected_fg_color, $selected_bg_color, 70%);
 
       &:hover { color: $selected_fg_color; }
 
-      &:backdrop { color: mix($backdrop_selected_fg_color, $selected_bg_color, 70%); }
+      &:backdrop { color: gtkmix($backdrop_selected_fg_color, $selected_bg_color, 70%); }
     }
 
     &:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
 
-    &:backdrop { color: mix($backdrop_fg_color, $backdrop_base_color, 70%); }
+    &:backdrop { color: gtkmix($backdrop_fg_color, $backdrop_base_color, 70%); }
   }
 
   &.progressbar { // progress bar in treeviews
@@ -2065,10 +2061,9 @@ treeview.view {
 
         @if $variant == 'light' {
           color: $selected_bg_color;
-
         }
 
-        @else { box-shadow: inset 0 1px transparentize(white, 0.95); }
+        @else { box-shadow: inset 0 1px gtkalpha(white, 0.05); }
 
         background-image: image($base_color);
 
@@ -2091,21 +2086,20 @@ treeview.view {
   }
 
   &.trough { // progress bar trough in treeviews
-    background-color: transparentize($fg_color,0.9);
+    background-color: gtkalpha($fg_color,0.1);
 
     &:selected {
       &:focus, & {
         background-color: if($variant == 'light',
-                             transparentize($selected_fg_color, 0.7),
-                             darken($selected_bg_color, 10%));
-
+                             gtkalpha($selected_fg_color, 0.3),
+                             gtkmix(black, $selected_bg_color, 10%));
       }
     }
   }
 
   header {
     button {
-      $_column_header_color: mix($fg_color, $base_color, 50%);
+      $_column_header_color: gtkmix($fg_color, $base_color, 50%);
 
       @extend %column_header_button;
 
@@ -2119,7 +2113,7 @@ treeview.view {
       &:hover {
         @extend %column_header_button;
 
-        color: mix($_column_header_color, $fg_color, 50%);
+        color: gtkmix($_column_header_color, $fg_color, 50%);
         box-shadow: none;
         transition: none; //I shouldn't need this
       }
@@ -2165,7 +2159,7 @@ treeview.view {
   }
 
   &:backdrop {
-    color: mix($backdrop_fg_color, $backdrop_bg_color, 50%);
+    color: gtkmix($backdrop_fg_color, $backdrop_bg_color, 50%);
     border-color: $backdrop_bg_color;
     border-style: none solid solid none;
     background-image: none;
@@ -2189,7 +2183,7 @@ menubar,
 .menubar {
   -GtkWidget-window-dragging: true;
   padding: 0px;
-  box-shadow: inset 0 -1px transparentize(black, 0.9);
+  box-shadow: inset 0 -1px gtkalpha(black, 0.1);
 
   &:backdrop { background-color: $backdrop_bg_color; }
 
@@ -2297,7 +2291,7 @@ menu,
 
     &.top {
       margin-top: -4px;
-      border-bottom: 1px solid mix($fg_color, $base_color, 10%);
+      border-bottom: 1px solid gtkmix($fg_color, $base_color, 10%);
       border-top-right-radius: $menu_radius;
       border-top-left-radius: $menu_radius;
       -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
@@ -2306,13 +2300,13 @@ menu,
     &.bottom {
       margin-top: 8px;
       margin-bottom: -12px;
-      border-top: 1px solid mix($fg_color, $base_color, 10%);
+      border-top: 1px solid gtkmix($fg_color, $base_color, 10%);
       border-bottom-right-radius: $menu_radius;
       border-bottom-left-radius: $menu_radius;
       -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
     }
 
-    &:hover { background-color: mix($fg_color, $base_color, 10%); }
+    &:hover { background-color: gtkmix($fg_color, $base_color, 10%); }
 
     &:backdrop { background-color: $backdrop_menu_color; }
 
@@ -2419,7 +2413,7 @@ notebook {
         background-color: $shade_color;
       }
       @if $variant == 'light' {
-        &.reorderable-page:backdrop { background-color: lighten($shade_color, 5.3%); }
+        &.reorderable-page:backdrop { background-color: gtkmix($shade_color, white, 5.3%); }
       }
       &:checked {
         &.reorderable-page {
@@ -2442,7 +2436,7 @@ notebook {
           &:not(.reorderable-page):hover {
             box-shadow: inset 0 -4px $borders_color;
             &:not(:checked) {
-              background-color: if($variant == 'light', darken($bg_color, 5.3%), lighten($bg_color, 6%));
+              background-color: if($variant == 'light', gtkmix(black, $bg_color, 5.3%), gtkmix(white, $bg_color, 6%));
             }
           }
           &:not(.reorderable-page):checked {
@@ -2464,7 +2458,7 @@ notebook {
           &:not(.reorderable-page):hover {
             box-shadow: inset 0 4px $borders_color;
             &:not(:checked) {
-              background-color: if($variant == 'light', darken($bg_color, 5.3%), lighten($bg_color, 6%));
+              background-color: if($variant == 'light', gtkmix(black, $bg_color, 5.3%), gtkmix(white, $bg_color, 6%));
             }
           }
           &:not(.reorderable-page):checked {
@@ -2486,7 +2480,7 @@ notebook {
           &:not(.reorderable-page):hover {
             box-shadow: inset -4px 0 $borders_color;
             &:not(:checked) {
-              background-color: if($variant == 'light', darken($bg_color, 5.3%), lighten($bg_color, 6%));
+              background-color: if($variant == 'light', gtkmix(black, $bg_color, 5.3%), gtkmix(white, $bg_color, 6%));
             }
           }
           &:not(.reorderable-page):checked {
@@ -2508,7 +2502,7 @@ notebook {
           &:not(.reorderable-page):hover {
             box-shadow: inset 4px 0 $borders_color;
             &:not(:checked) {
-              background-color: if($variant == 'light', darken($bg_color, 5.3%), lighten($bg_color, 6%));
+              background-color: if($variant == 'light', gtkmix(black, $bg_color, 5.3%), gtkmix(white, $bg_color, 6%));
             }
           }
           &:not(.reorderable-page):checked {
@@ -2578,7 +2572,7 @@ notebook {
       &:hover:not(:active):not(:backdrop) {
         background-clip: padding-box;
         background-image: none;
-        background-color: transparentize(white, 0.7);
+        background-color: gtkalpha(white, 0.3);
         border-color: transparent;
         box-shadow: none;
       }
@@ -2610,15 +2604,15 @@ notebook {
         //background-color: darken($shade_color, 3%);
 
         &.reorderable-page {
-          border-color: transparentize($borders_color, 0.7);
-          background-color: if($variant == 'light', darken($shade_color, 2%), lighten($shade_color, 2.3%));
+          border-color: gtkalpha($borders_color, 0.3);
+          background-color: if($variant == 'light', gtkmix(black, $shade_color, 2%), gtkmix(white, $shade_color, 2.3%));
           box-shadow: inset -1px -1px $headerbar_border;
           transition: background 150ms ease-in-out;
         }
       }
 
       &:backdrop {
-        color: mix($backdrop_fg_color, $backdrop_bg_color, 60%);
+        color: gtkmix($backdrop_fg_color, $backdrop_bg_color, 60%);
 
         &.reorderable-page {
           border-color: transparent;
@@ -2635,7 +2629,7 @@ notebook {
           background-color: $active_tab_color;
           box-shadow: inset -1px -1px $headerbar_border;
           &:hover {
-            background-color: if($variant == 'light', darken($active_tab_color, 2.3%), lighten($active_tab_color, 2.3%));
+            background-color: if($variant == 'light', gtkmix(black, $active_tab_color, 2.3%), gtkmix(white, $active_tab_color, 2.3%));
           }
         }
       }
@@ -2951,7 +2945,7 @@ switch {
     background-color: $checkradio_bg_color;
     &:hover {
       background-image: image(gtkalpha(currentColor, .1));
-      &:active { background-image: image(transparentize(black, .8)); }
+      &:active { background-image: image(gtkalpha(black, .2)); }
     }
   }
 
@@ -2973,7 +2967,7 @@ switch {
       @if $variant == 'light' { color: $backdrop_bg_color; }
       //border-color: if($variant == 'light', $checkradio_borders_color,
       //                                      $selected_borders_color);
-      background-color: transparentize($checkradio_bg_color, 0.5);
+      background-color: gtkalpha($checkradio_bg_color, 0.5);
     }
 
     &:disabled {
@@ -3045,11 +3039,11 @@ switch {
   ('', 'none', 'transparent', $checkradio_bg_color),
   (':hover', 'none', 'transparent', $checkradio_bg_color),
   (':active', 'none', 'transparent', $checkradio_bg_color),
-  (':backdrop', 'none', 'transparent', '#{desaturate($checkradio_bg_color, 100%)}'),
+  (':backdrop', 'none', 'transparent', '#{gtkalpha($fg_color, .5)}'),
   (':checked', '-gtk-icontheme(\'object-select-symbolic\')', $osd_fg_color, $checkradio_bg_color),
   (':checked:hover', '-gtk-icontheme(\'object-select-symbolic\')', $osd_fg_color, $checkradio_bg_color),
   (':checked:active', '-gtk-icontheme(\'object-select-symbolic\')', $osd_fg_color, $checkradio_bg_color),
-  (':backdrop:checked', '-gtk-icontheme(\'object-select-symbolic\')', '#{transparentize($osd_fg_color, 0.2)}', '#{desaturate($checkradio_bg_color, 100%)}'), {
+  (':backdrop:checked', '-gtk-icontheme(\'object-select-symbolic\')', '#{gtkalpha($osd_fg_color, 0.8)}', '#{gtkalpha($fg_color, .5)}'), {
 
   .view.content-view.check#{$check_state}:not(list),
   .content-view:not(list) check#{$check_state} {
@@ -3258,7 +3252,7 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
   // OSD
   .osd & {
     border-color: $osd_borders_color;
-    background-color: transparentize($osd_borders_color, 0.2);
+    background-color: gtkalpha($osd_borders_color, 0.8);
 
     &:disabled { background-color: $osd_insensitive_bg_color; }
   }
@@ -3371,7 +3365,7 @@ scale {
 
     // OSD
     .osd & {
-      background-color: mix($osd_fg_color, $osd_borders_color, 25%);
+      background-color: gtkmix($osd_fg_color, $osd_borders_color, 25%);
 
       &:disabled {
         &:backdrop, & {
@@ -3737,7 +3731,7 @@ progressbar {
 
   // FIXME: insensitive state missing and some other state should be set probably
   font-size: smaller;
-  color: transparentize($fg_color, 0.6);
+  color: gtkalpha($fg_color, 0.4);
   font-feature-settings: "tnum";
 
   &:backdrop {
@@ -3840,7 +3834,7 @@ levelbar {
     &:last-child { border-radius: 0 8px 8px 0; }
 
     &.low {
-      border-color: if($variant == 'light', darken($warning_color, 20%), $warning_color);
+      border-color: if($variant == 'light', gtkmix(black, $warning_color, 20%), $warning_color);
       background-color: $warning_color;
 
       &:backdrop { border-color: $warning_color; };
@@ -3848,14 +3842,14 @@ levelbar {
 
     &.high,
     &:not(.empty) {
-      border-color: if($variant == 'light', darken($progress_bg_color, 20%), $progress_bg_color);
+      border-color: if($variant == 'light', gtkmix(black, $progress_bg_color, 20%), $progress_bg_color);
       background-color: $progress_bg_color;
 
       &:backdrop { border-color: $progress_bg_color; }
     }
 
     &.full {
-      border-color: if($variant == 'light', darken($success_color, 20%), $success_color);
+      border-color: if($variant == 'light', gtkmix(black, $success_color, 20%), $success_color);
       background-color: $success_color;
 
       &:backdrop { border-color: $success_color; };
@@ -3863,9 +3857,9 @@ levelbar {
 
     &.empty {
       background-color: transparent;
-      border-color: if($variant == 'light', transparentize($fg_color,0.8), transparentize($fg_color,0.9));
+      border-color: if($variant == 'light', gtkalpha($fg_color,0.2), gtkalpha($fg_color,0.1));
 
-      &:backdrop { border-color: transparentize($backdrop_fg_color,0.85); }
+      &:backdrop { border-color: gtkalpha($backdrop_fg_color,0.25); }
     }
   }
 }
@@ -4062,7 +4056,7 @@ expander {
     -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
     &:dir(rtl) { -gtk-icon-source: -gtk-icontheme('pan-end-symbolic-rtl'); }
 
-    &:hover { color: lighten($fg_color,30%); } //only lightens the arrow
+    &:hover { color: gtkmix(white,$fg_color,30%); } //only lightens the arrow
     &:disabled { color: $insensitive_fg_color; }
     &:disabled:backdrop { color: $backdrop_insensitive_color; }
 
@@ -4093,13 +4087,13 @@ calendar {
   &.button {
     @extend %undecorated_button;
 
-    color: transparentize($fg_color, 0.55);
+    color: gtkalpha($fg_color, 0.45);
 
     &:hover { color: $fg_color; }
 
-    &:backdrop { color: transparentize($backdrop_fg_color,0.55); }
+    &:backdrop { color: gtkalpha($backdrop_fg_color,0.45); }
 
-    &:disabled { color:  transparentize($insensitive_fg_color,0.55); }
+    &:disabled { color:  gtkalpha($insensitive_fg_color,0.45); }
   }
 
   &.highlight {
@@ -4273,7 +4267,7 @@ separator.sidebar {
 
   &.selection-mode,
   .selection-mode & {
-    background-color: darken($suggested_bg_color, 20%);
+    background-color: gtkmix(black, $suggested_bg_color, 20%);
   }
 }
 
@@ -4394,7 +4388,7 @@ paned {
     -gtk-icon-source: none; // defeats the ugly default handle decoration
     border-style: none; // just to be sure
     background-color: transparent;
-    // workaround, using background istead of a border since the border will get rendered twice (?)
+    // workaround, using background instead of a border since the border will get rendered twice (?)
     background-image: image($borders_color);
     background-size: 1px 1px;
 
@@ -4481,7 +4475,7 @@ infobar {
       }
       &:disabled {
         background-color: gtkmix($i_color, $bg_color, 40%);
-        label, & { color: transparentize(mix($fg_color, $i_color, 70%), .4); }
+        label, & { color: gtkalpha(gtkmix($fg_color, $i_color, 70%), .6); }
       }
     }
 
@@ -4498,7 +4492,7 @@ infobar {
     border-radius: 50%;
   }
 
-  selection { background-color: darken($bg_color, 10%); }
+  selection { background-color: gtkmix(black, $bg_color, 10%); }
   *:link { color: $link_color; }
 }
 
@@ -4621,7 +4615,7 @@ colorswatch {
 
     &.light overlay {
       border-color: $drop_target_color;
-      box-shadow: inset 0 0 0 2px if($variant == 'light', darken($drop_target_color, 7%), $borders_color),
+      box-shadow: inset 0 0 0 2px if($variant == 'light', gtkmix(black, $drop_target_color, 7%), $borders_color),
                   inset 0 0 0 1px $drop_target_color;
     }
 
@@ -4686,11 +4680,11 @@ colorchooser .popover.osd { border-radius: 5px; }
 // ********
 //content view (grid/list)
 .content-view {
-  background-color: darken($bg_color,7%);
+  background-color: gtkmix($bg_color,black,7%);
 
   &:hover { -gtk-icon-effect: highlight; }
 
-  &:backdrop { background-color: darken($bg_color,7%); }
+  &:backdrop { background-color: gtkmix(black,$bg_color,7%); }
 
   rubberband, .rubberband { @extend rubberband; }
 }
@@ -4706,7 +4700,7 @@ colorchooser .popover.osd { border-radius: 5px; }
   button { // +/- buttons on GtkVolumeButton popup
     &:hover {
       @extend %undecorated_button;
-      background-color: transparentize($fg_color,0.9);
+      background-color: gtkalpha($fg_color,0.1);
       border-radius: 5px;
     }
 
@@ -4725,8 +4719,8 @@ decoration {
 
   // this needs to be transparent
   // see bug #722563
-  $_wm_border: if($variant=='light', transparentize(black, 0.95), darken($borders_color, 4%));
-  $_wm_border_backdrop: if($variant=='light', transparentize(black, 0.98), darken($borders_color, 8.3%));
+  $_wm_border: if($variant=='light', $border_color, gtkmix(white, $window_bg_color, 10.7%));
+  $_wm_border_backdrop: if($variant=='light', gtkalpha($border_color, .02), gtkmix(white, $window_bg_color, 5.7%));
 
   box-shadow: 0 3px 12px 1px transparentize(black, 0.7),
               0 0 0 1px $_wm_border; //doing borders with box-shadow
@@ -4769,15 +4763,15 @@ decoration {
 
   // server-side decorations as used by mutter
   // just doing borders, wm draws actual shadows
-  $_ssd_wm_border: if($variant=='light', transparentize(black, 0.7), darken($borders_color, 4%));
-  $_ssd_wm_border_backdrop: if($variant=='light', transparentize(black, 0.8), darken($borders_color, 4%));
+  $_ssd_wm_border: if($variant=='light', transparentize(black, 0.7), $_wm_border);
+  $_ssd_wm_border_backdrop: if($variant=='light', transparentize(black, 0.8), $_wm_border_backdrop);
   .ssd & { box-shadow: 0 0 0 1px $_ssd_wm_border; }
   .ssd &:backdrop { box-shadow: 0 0 0 1px $_ssd_wm_border_backdrop; }
 
   .csd.popup & {
     border-radius: $menu_radius;
     box-shadow: 0 1px 2px transparentize(black, 0.8),
-                0 0 0 1px transparentize($_wm_border, 0.1);
+                0 0 0 1px gtkalpha($_wm_border, 0.9);
   }
 
   tooltip.csd & {
@@ -4788,7 +4782,7 @@ decoration {
   messagedialog.csd & {
     border-radius: $window_radius;
     box-shadow: 0 1px 2px transparentize(black, 0.8),
-                0 0 0 1px transparentize($_wm_border, 0.1);
+                0 0 0 1px gtkalpha($_wm_border, 0.9);
   }
 
   .solid-csd & {
@@ -4843,8 +4837,6 @@ button.titlebutton {
 .selection-mode .titlebar button.titlebutton,
 headerbar.selection-mode button.titlebutton,
 .titlebar.selection-mode button.titlebutton {
-  //@include _button_text_shadow(white, $suggested_bg_color);
-
   &:backdrop { -gtk-icon-shadow: none; }
 }
 
@@ -4857,13 +4849,13 @@ headerbar.selection-mode button.titlebutton,
     color: $selected_fg_color;
 
     @at-root %selected_items_disabled,
-    &:disabled { color: mix($selected_fg_color, $selected_bg_color, 50%); }
+    &:disabled { color: gtkmix($selected_fg_color, $selected_bg_color, 50%); }
 
     @at-root %selected_items_backdrop,
     &:backdrop {
       color: $backdrop_selected_fg_color;
 
-      &:disabled { color: mix($backdrop_selected_fg_color, $selected_bg_color, 30%); }
+      &:disabled { color: gtkmix($backdrop_selected_fg_color, $selected_bg_color, 30%); }
     }
   }
 }
@@ -4918,9 +4910,9 @@ cursor-handle {
   color: $fg_color;
   background-color: $base_color;
   border: 1px solid;
-  border-color: if($variant == 'light', mix($borders_color, $bg_color, 50%), $borders_color);
+  border-color: if($variant == 'light', gtkmix($borders_color, $bg_color, 50%), $borders_color);
   border-radius: 5px;
-  box-shadow: if($variant == 'light', inset 0 -3px mix($base_color, $bg_color, 20%), inset 0 -3px mix($borders_color, $base_color, 60%));
+  box-shadow: if($variant == 'light', inset 0 -3px gtkmix($base_color, $bg_color, 20%), inset 0 -3px gtkmix($borders_color, $base_color, 60%));
   font-size: smaller;
 
   &:backdrop {
@@ -4999,7 +4991,7 @@ button.emoji-section {
   &:last-child { margin-right: 7px; }
 
   &:backdrop:not(:checked) { border-color: transparent; }
-  &:hover { border-color: if($variant == 'light', $borders_color, transparentize($fg_color, .9)); }
+  &:hover { border-color: if($variant == 'light', $borders_color, gtkalpha($fg_color, .1)); }
   &:checked { border-color: $selected_bg_color; }
 
   label {
@@ -5034,4 +5026,3 @@ popover.emoji-completion contents row box {
 popover.emoji-completion .emoji:hover {
   background: $popover_hover_color;
 }
-
