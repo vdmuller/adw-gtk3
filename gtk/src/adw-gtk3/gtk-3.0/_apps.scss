@@ -13,20 +13,21 @@
       border-radius: $button_radius;
       border: none;
       padding-right: 6px;
-      @include button(normal, $headerbar_color, $fg_color);
+
+      @extend %btn_normal; // From _custom.scss
 
       &:backdrop {
-        @include button(backdrop, $bg_color, $backdrop_fg_color);
+        @include button(backdrop, $bg_color, $fg_color);
       }
     }
 
     .nautilus-path-bar {
-      border-radius: $button_radius;
-      @include button(normal, $headerbar_color, $fg_color);
       min-height: 34px;
+      border-radius: $button_radius;
+      @extend %btn_normal;
 
       &:backdrop {
-        @include button(backdrop, $bg_color, $backdrop_fg_color);
+        @include button(backdrop, $bg_color, $fg_color);
       }
 
       button:not(.titlebutton) {
@@ -49,25 +50,24 @@
             @include button(active, $bg_color, $fg_color);
             * { opacity: 1; }
             &:backdrop {
-              @include button(backdrop-active, $bg_color, $backdrop_fg_color);
+              @include button(backdrop-active, $bg_color, $fg_color);
             }
           }
         }
 
         &.toggle.popup {
-          @include button(normal, $headerbar_color, $fg_color);
           border-radius: 0 $button-radius $button-radius 0;
-          border-left: 1px solid $linked_border;
+          border-left: 1px solid $border_color;
           image { color: $text_color; }
 
-          &:hover { @include button(hover, $headerbar_color, $fg_color); }
-
-          &:checked { @include button(active, $headerbar_color, $fg_color); }
+          @extend %btn_normal;
+          &:hover { @extend %btn_hover; }
+          &:active, &:checked { @extend %btn_active; }
 
           &:backdrop {
-            @include button(backdrop, $bg_color, $backdrop_fg_color);
-            &:hover { @include button(normal, $bg_color, $backdrop_fg_color); }
-            border-left: 1px solid $backdrop_linked_border;
+            @include button(backdrop, $bg_color, $fg_color);
+            &:hover { @include button(normal, $bg_color, $fg_color); }
+            border-left: 1px solid $border_color;
           }
         }
       }
@@ -102,7 +102,7 @@
 
   .search + .toggle.popup {
     @extend %colored_buttons;
-    border-left-color: $linked_border;
+    border-left-color: $border_color;
   }
 
   // Location entry button
@@ -257,7 +257,7 @@ list.tweak-categories separator.horizontal {
   taskrow.activatable.new-task-row button.popup.toggle {
     border-radius: 0px;
     border: none;
-    border-left: 1px solid $borders-color;
+    border-left: 1px solid $borders_color;
     padding-left: 10px;
     padding-right: 10px;
     -gtk-outline-radius: 0px;
@@ -643,3 +643,4 @@ terminal-window notebook > header {
 //  &.root {}
 //  &.remote {}
 //}
+
