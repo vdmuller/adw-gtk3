@@ -21,3 +21,7 @@ Named colors that you can change: https://gnome.pages.gitlab.gnome.org/libadwait
 ## Color themes for adw-gtk3 and libadwaita
 
 TODO
+
+| Color theme | Screenshot |
+|:------------|:-----------|
+| placeholder | placeholder |
