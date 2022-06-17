@@ -20,6 +20,10 @@ Named colors that you can change: https://gnome.pages.gitlab.gnome.org/libadwait
 
 ## Color themes for adw-gtk3 and libadwaita
 
+Note: GTK-3 is CPU rendered while libadwaita is GPU rendered. To get better CPU performance adw-gtk3 is not using too many transparent colors like libadwaita. Because of that reason you may notice some minor color mismatches between GTK-3 and 4 in the color themes. (It should still be close enough.)
+
+Here are some premade color themes that you can use. Use light themes with `adw-gtk3` and dark themes with `adw-gtk3-dark` enabled.
+
 TODO
 
 | Color theme | Screenshot |
