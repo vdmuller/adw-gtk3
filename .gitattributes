@@ -1,3 +1,4 @@
 .gitattributes export-ignore
 .github export-ignore
 screenshot.png export-ignore
+color-themes export-ignore
