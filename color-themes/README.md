@@ -7,7 +7,7 @@ Adw-gtk3 allows you to change the colors the same way as libadwaita. For example
 @define-color accent_color @green_4;
 @define-color accent_bg_color @green_4;
 ```
-3. Save the file. This is not changed seamlessy, so you'll have to close any open application to see the changes.
+3. Save the file. This does not change seamlessly, so you'll have to close any open application to see the changes.
 
 ## Color themes for adw-gtk3 and libadwaita
 
