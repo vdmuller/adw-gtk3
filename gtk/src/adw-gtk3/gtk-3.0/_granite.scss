@@ -37,7 +37,7 @@ window.flat headerbar {
 
 .h4,
 .category-label {
-  color: gtkalpha($fg_color, 0.2);
+  color: gtkalpha($fg_color, 0.8);
   font-weight: 700;
 }
 
@@ -414,7 +414,7 @@ label.terminal {
 
   .dim-label { @extend .dim-label; }
 
-  .h1, .h3 { color: gtkalpha($fg_color, 0.2); }
+  .h1, .h3 { color: gtkalpha($fg_color, 0.8); }
 }
 
 // Back button

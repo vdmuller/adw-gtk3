@@ -1,37 +1,64 @@
 // Custom added styles
 
-// TODO: Not needed, clean up
-$linked_border: $border_color;
-$linked_border_checked: $linked_border;
-$backdrop_linked_border: $linked_border;
-
 // Trying to mimic the libadwaita buttons without using gtkalpha for performance reasons
+// Some common colored button styles
+%btn_normal {
+  @if $variant == 'light' {
+    @include button(normal, gtkshade($headerbar_color, 1.005), $fg_color);
+  }
+  @else {
+    @include button(normal, $headerbar_color, $fg_color);
+  }
+}
+
+%btn_hover {
+  @if $variant == 'light' {
+    @include button(hover, gtkshade($headerbar_color, 0.999), $fg_color);
+    &:backdrop {
+      @include button(backdrop, gtkshade($bg_color, 0.97), $fg_color);
+    }
+  }
+  @else {
+    @include button(hover, $headerbar_color, $fg_color);
+    &:backdrop {
+      @include button(backdrop, gtkshade($bg_color, 1.19), $fg_color);
+    }
+  }
+}
+
+%btn_active {
+  @if $variant == 'light' {
+    @include button(active, $headerbar_color, $fg_color);
+    &:backdrop {
+      @include button(backdrop-active, gtkshade($bg_color, 0.975), $backdrop_fg_color);
+    }
+  }
+  @else {
+    @include button(active, gtkshade($headerbar_color, 1.005), $fg_color);
+    &:backdrop {
+      @include button(backdrop-active, gtkshade($bg_color, 1.17), $backdrop_fg_color);
+    }
+  }
+}
+
 %colored_buttons {
-  @include button(normal, $headerbar_color, $fg_color);
+  @extend %btn_normal;
+  &:hover { @extend %btn_hover; }
+  &:active, &:checked { @extend %btn_active; }
+
   &:backdrop {
     @include button(backdrop, $bg_color, $fg_color);
   }
-  &:hover {
-    @include button(hover, $headerbar_color, $fg_color);
-    &:backdrop {
-      @include button(backdrop, $bg_color, $fg_color);
-    }
-  }
-  &:active, &:checked {
-    @include button(active, $headerbar_color, $fg_color);
-    &:backdrop {
-      @include button(backdrop-active, $bg_color, $fg_color);
-    }
-  }
+
   &:disabled {
     @include button(insensitive, $headerbar_color, $fg_color);
-  }
-  &:backdrop:disabled {
-    @include button(backdrop-insensitive, $bg_color, $fg_color);
+    &:backdrop {
+      @include button(backdrop-insensitive, $bg_color, $fg_color);
+    }
   }
 
   &.default:not(:backdrop):not(.suggested-action):not(.destructive-action) {
-    @include button(normal, $headerbar_color, $fg_color);
+    @extend %btn_normal;
   }
 
   &.flat:not(:hover):not(:active) { @include button(undecorated); }
@@ -102,7 +129,7 @@ $backdrop_linked_border: $linked_border;
   &:active, &:checked { @include button(active, gtkalpha($suggested_bg_color, 0.5), white); }
   &:backdrop, &:backdrop:hover { @include button(backdrop, gtkalpha($suggested_bg_color, 0.5), white); }
   &:disabled { @include button(insensitive, $headerbar_color, $fg_color); }
-  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $backdrop_insensitive_color); }
+  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $fg_color); }
 }
 
 %destructive_buttons {
@@ -111,7 +138,7 @@ $backdrop_linked_border: $linked_border;
   &:active, &:checked { @include button(active, gtkalpha($destructive_color, 0.5), white); }
   &:backdrop, &:backdrop:hover { @include button(backdrop, gtkalpha($destructive_color, 0.5), white); }
   &:disabled { @include button(insensitive, $headerbar_color, $fg_color); }
-  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $backdrop_insensitive_color); }
+  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $fg_color); }
 }
 
 // headerbar stuff
@@ -132,16 +159,8 @@ headerbar, .titlebar {
   & > .stack-switcher.linked > button:not(:only-child) {
     @extend %linked;
     &, &:hover, &:not(:backdrop), &:not(:disabled) {
-      &:not(:first-child) { border-left-color: $linked_border; }
-      &:not(:last-child) { border-right-color: $linked_border; }
-    }
-    &:active, &:checked {
-      &:not(:first-child) { border-left-color: $linked_border_checked; }
-      &:not(:last-child) { border-right-color: $linked_border_checked; }
-    }
-    &:backdrop {
-      &:not(:first-child) { border-left-color: $backdrop_linked_border; }
-      &:not(:last-child) { border-right-color: $backdrop_linked_border; }
+      &:not(:first-child) { border-left-color: $border_color; }
+      &:not(:last-child) { border-right-color: $border_color; }
     }
     &:first-child { border-left-color: transparent; }
     &:last-child { border-right-color: transparent; }
@@ -150,7 +169,7 @@ headerbar, .titlebar {
     &:first-child:not(:backdrop),
     &:not(:last-child):not(:backdrop) {
       &:checked, &:active {
-        box-shadow: inset -1px 0 $linked_border_checked;
+        box-shadow: inset -1px 0 $border_color;
         + button { border-left-color: transparent; }
       }
     }
@@ -176,8 +195,10 @@ headerbar, .titlebar {
   // Entries
   entry {
     min-height: 32px; // Evens out the height for the top and bottom borders which adds 2px
-    @include button(normal, $headerbar_color, $text_color);
-    &:backdrop { @include button(backdrop, $bg_color, $backdrop_text_color); }
+
+    @extend %btn_normal;
+    &:backdrop { @include button(backdrop, $bg_color, $fg_color); }
+
     &:disabled { @include button(insensitive, $headerbar_color, $insensitive_fg_color); }
     &:disabled:backdrop { @include button(insensitive, $bg_color, $backdrop_insensitive_color); }
 
@@ -239,8 +260,7 @@ headerbar, .titlebar {
   }
 
   .linked entry:not(:first-child) {
-    border-left-color: $linked_border;
-    &:backdrop { border-left-color: $backdrop_linked_border; }
+    border-left-color: $border_color;
   }
   .linked entry ~ .image-button { @extend %colored_buttons; }
 
@@ -269,22 +289,22 @@ headerbar, .titlebar {
 list.content,
 list.view.frame {
   button, > row:not(:selected):hover button {
-    @include button(normal, $base_color, $card_fg_color);
+    @include button(normal, $base_color, $fg_color);
     &.flat:not(:hover):not(:active) { @include button(undecorated); }
-    &:hover { @include button(hover, $base_color, $card_fg_color); }
-    &:active, &:checked { @include button(active, $base_color, $card_fg_color); }
-    &:disabled { @include button(insensitive, $base_color, $insensitive_fg_color); }
-    &:backdrop { @include button(backdrop, $base_color, $backdrop_fg_color); }
-    &:backdrop:disabled { @include button(backdrop-insensitive, $base_color, $backdrop_fg_color); }
+    &:hover { @include button(hover, $base_color, $fg_color); }
+    &:active, &:checked { @include button(active, $base_color, $fg_color); }
+    &:disabled { @include button(insensitive, $base_color, $fg_color); }
+    &:backdrop { @include button(backdrop, $base_color, $fg_color); }
+    &:backdrop:disabled { @include button(backdrop-insensitive, $base_color, $fg_color); }
 
     &.suggested-action { @extend %suggested_buttons; }
     &.destructive-action { @extend %destructive_buttons; }
   }
   entry {
-    @include button(normal, $base_color, $text_color);
-    &:disabled { @include button(insensitive, $base_color, $insensitive_fg_color); }
-    &:backdrop { @include button(backdrop, $base_color, $backdrop_text_color); }
-    &:backdrop:disabled { @include button(backdrop-insensitive, $base_color, $backdrop_fg_color); }
+    @include button(normal, $base_color, $fg_color);
+    &:disabled { @include button(insensitive, $base_color, $fg_color); }
+    &:backdrop { @include button(backdrop, $base_color, $fg_color); }
+    &:backdrop:disabled { @include button(backdrop-insensitive, $base_color, $fg_color); }
   }
 }
 
@@ -294,18 +314,18 @@ popover.background {
     &.flat:not(:hover):not(:active) { @include button(undecorated); }
     &:hover { @include button(hover, $popover_bg_color, $fg_color); }
     &:active, &:checked { @include button(active, $popover_bg_color, $fg_color); }
-    &:disabled { @include button(insensitive, $popover_bg_color, $insensitive_fg_color); }
-    &:backdrop { @include button(backdrop, $popover_bg_color, $backdrop_fg_color); }
-    &:backdrop:disabled { @include button(backdrop-insensitive, $popover_bg_color, $backdrop_fg_color); }
+    &:disabled { @include button(insensitive, $popover_bg_color, $fg_color); }
+    &:backdrop { @include button(backdrop, $popover_bg_color, $fg_color); }
+    &:backdrop:disabled { @include button(backdrop-insensitive, $popover_bg_color, $fg_color); }
 
     &.suggested-action { @extend %suggested_buttons; }
     &.destructive-action { @extend %destructive_buttons; }
   }
   entry {
-    @include button(normal, $popover_bg_color, $text_color);
-    &:disabled { @include button(insensitive, $popover_bg_color, $insensitive_fg_color); }
-    &:backdrop { @include button(backdrop, $popover_bg_color, $backdrop_text_color); }
-    &:backdrop:disabled { @include button(backdrop-insensitive, $popover_bg_color, $backdrop_fg_color); }
+    @include button(normal, $popover_bg_color, $fg_color);
+    &:disabled { @include button(insensitive, $popover_bg_color, $fg_color); }
+    &:backdrop { @include button(backdrop, $popover_bg_color, $fg_color); }
+    &:backdrop:disabled { @include button(backdrop-insensitive, $popover_bg_color, $fg_color); }
   }
 }
 
