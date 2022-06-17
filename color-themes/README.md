@@ -9,7 +9,7 @@ Adw-gtk3 allows you to change the colors the same way as libadwaita. For example
 ```
 3. Save the file. This does not change seamlessly, so you'll have to close and re-open any apps.
 
-If you want to use the same colors in libadwaita/gtk4 simply copy or symlink `gtk.css` to `~/.config/gtk-4.0/gtk.css`
+If you want to use the same colors in libadwaita/gtk4 simply copy or symlink `gtk.css` to `~/.config/gtk-4.0/gtk.css` or vice versa.
 
 Flatpak apps may need a permission setting:
 ```bash
