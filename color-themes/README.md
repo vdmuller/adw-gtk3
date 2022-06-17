@@ -9,6 +9,10 @@ Adw-gtk3 allows you to change the colors the same way as libadwaita. For example
 ```
 3. Save the file. This does not change seamlessly, so you'll have to close any open application to see the changes.
 
+If you want to use the same colors in libadwaita/gtk4 simply copy or symlink `gtk.css` to `~/.config/gtk-4.0/gtk.css`
+
+Named colors that you can change: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/named-colors.html
+
 ## Color themes for adw-gtk3 and libadwaita
 
 TODO
