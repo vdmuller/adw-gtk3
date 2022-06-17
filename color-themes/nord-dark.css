@@ -1,4 +1,4 @@
-/* nord colors - use with dark style selected */
+/* nord colors - use with adw-gtk3-dark */
 @define-color accent_color @green_4;
 @define-color accent_bg_color @green_4;
 @define-color window_bg_color #2E3440;
