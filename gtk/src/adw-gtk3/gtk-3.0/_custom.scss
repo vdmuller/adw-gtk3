@@ -4,37 +4,37 @@
 // Some common colored button styles
 %btn_normal {
   @if $variant == 'light' {
-    @include button(normal, gtkshade($headerbar_color, 1.005), $fg_color);
+    @include button(normal, gtkshade($headerbar_color, 1.005), $headerbar_fg_color);
   }
   @else {
-    @include button(normal, $headerbar_color, $fg_color);
+    @include button(normal, $headerbar_color, $headerbar_fg_color);
   }
 }
 
 %btn_hover {
   @if $variant == 'light' {
-    @include button(hover, gtkshade($headerbar_color, 0.999), $fg_color);
+    @include button(hover, gtkshade($headerbar_color, 0.999), $headerbar_fg_color);
     &:backdrop {
-      @include button(backdrop, gtkshade($bg_color, 0.97), $fg_color);
+      @include button(backdrop, gtkshade($bg_color, 0.97), $headerbar_fg_color);
     }
   }
   @else {
-    @include button(hover, $headerbar_color, $fg_color);
+    @include button(hover, $headerbar_color, $headerbar_fg_color);
     &:backdrop {
-      @include button(backdrop, gtkshade($bg_color, 1.19), $fg_color);
+      @include button(backdrop, gtkshade($bg_color, 1.19), $headerbar_fg_color);
     }
   }
 }
 
 %btn_active {
   @if $variant == 'light' {
-    @include button(active, $headerbar_color, $fg_color);
+    @include button(active, $headerbar_color, $headerbar_fg_color);
     &:backdrop {
       @include button(backdrop-active, gtkshade($bg_color, 0.975), $backdrop_fg_color);
     }
   }
   @else {
-    @include button(active, gtkshade($headerbar_color, 1.005), $fg_color);
+    @include button(active, gtkshade($headerbar_color, 1.005), $headerbar_fg_color);
     &:backdrop {
       @include button(backdrop-active, gtkshade($bg_color, 1.17), $backdrop_fg_color);
     }
@@ -47,13 +47,13 @@
   &:active, &:checked { @extend %btn_active; }
 
   &:backdrop {
-    @include button(backdrop, $bg_color, $fg_color);
+    @include button(backdrop, $bg_color, $headerbar_fg_color);
   }
 
   &:disabled {
-    @include button(insensitive, $headerbar_color, $fg_color);
+    @include button(insensitive, $headerbar_color, $headerbar_fg_color);
     &:backdrop {
-      @include button(backdrop-insensitive, $bg_color, $fg_color);
+      @include button(backdrop-insensitive, $bg_color, $headerbar_fg_color);
     }
   }
 
@@ -72,10 +72,10 @@
   &:hover {
     @if $variant == 'light' {
       //@include button(normal, gtkmix(white, $headerbar_color, 28%), $fg_color);
-      @include button(normal, gtkshade($headerbar_color, 1.025), $fg_color);
+      @include button(normal, gtkshade($headerbar_color, 1.025), $headerbar_fg_color);
     }
     @else {
-      @include button(normal, gtkshade($headerbar_color, 0.87), $fg_color);
+      @include button(normal, gtkshade($headerbar_color, 0.87), $headerbar_fg_color);
     }
   }
 
@@ -98,10 +98,10 @@
 
   &:active, &:checked, &:active:hover, &:checked:hover {
     @if $variant == 'light' {
-      @include button(hover, gtkshade($headerbar_color, 1.015), $fg_color);
+      @include button(hover, gtkshade($headerbar_color, 1.015), $headerbar_fg_color);
     }
     @else {
-      @include button(hover, gtkshade($headerbar_color, 0.9), $fg_color);
+      @include button(hover, gtkshade($headerbar_color, 0.9), $headerbar_fg_color);
     }
     &:backdrop {
       @if $variant == 'light' {
@@ -114,7 +114,7 @@
   }
 
   &.default:not(:backdrop):not(.suggested-action):not(.destructive-action) {
-    @include button(normal, $headerbar_color, $fg_color);
+    @include button(normal, $headerbar_color, $headerbar_fg_color);
   }
 
   &.flat:not(:hover):not(:active) { @include button(undecorated); }
@@ -128,8 +128,8 @@
   &:hover { @include button(hover, $suggested_bg_color, white); }
   &:active, &:checked { @include button(active, gtkalpha($suggested_bg_color, 0.5), white); }
   &:backdrop, &:backdrop:hover { @include button(backdrop, gtkalpha($suggested_bg_color, 0.5), white); }
-  &:disabled { @include button(insensitive, $headerbar_color, $fg_color); }
-  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $fg_color); }
+  &:disabled { @include button(insensitive, $headerbar_color, $headerbar_fg_color); }
+  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $headerbar_fg_color); }
 }
 
 %destructive_buttons {
@@ -137,8 +137,8 @@
   &:hover { @include button(normal, $destructive_color, white); }
   &:active, &:checked { @include button(active, gtkalpha($destructive_color, 0.5), white); }
   &:backdrop, &:backdrop:hover { @include button(backdrop, gtkalpha($destructive_color, 0.5), white); }
-  &:disabled { @include button(insensitive, $headerbar_color, $fg_color); }
-  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $fg_color); }
+  &:disabled { @include button(insensitive, $headerbar_color, $headerbar_fg_color); }
+  &:backdrop:disabled { @include button(backdrop-insensitive, $bg_color, $headerbar_fg_color); }
 }
 
 // headerbar stuff
@@ -197,7 +197,7 @@ headerbar, .titlebar {
     min-height: 32px; // Evens out the height for the top and bottom borders which adds 2px
 
     @extend %btn_normal;
-    &:backdrop { @include button(backdrop, $bg_color, $fg_color); }
+    &:backdrop { @include button(backdrop, $bg_color, $headerbar_fg_color); }
 
     &:disabled { @include button(insensitive, $headerbar_color, $insensitive_fg_color); }
     &:disabled:backdrop { @include button(insensitive, $bg_color, $backdrop_insensitive_color); }
@@ -207,8 +207,8 @@ headerbar, .titlebar {
       &.right { margin-left: 6px; }
 
       // entry icons colors
-      color: gtkmix($fg_color, $base_color, 80%);
-      &:hover { color: $fg_color; }
+      color: gtkmix($headerbar_fg_color, $base_color, 80%);
+      &:hover { color: $headerbar_fg_color;; }
       &:active { color: $selected_bg_color; }
       &:backdrop { color: gtkmix($backdrop_fg_color, $backdrop_base_color, 80%); }
     }
@@ -376,8 +376,8 @@ list.view.frame {
   border-width: 0;
   padding: 0px 4px;
   min-height: 36px;
-  border-bottom: 1px solid $borders_color;
-  &:backdrop { border-color: $backdrop_borders_color; }
+  border-bottom: 1px solid $headerbar_border;
+  &:backdrop { border-color: $headerbar_border_backdrop; }
 
   &.default-decoration button.titlebutton {
     background-color: $titlebutton_normal;

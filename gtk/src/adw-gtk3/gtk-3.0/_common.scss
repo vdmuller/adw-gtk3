@@ -1589,11 +1589,9 @@ headerbar {
   @include headerbar_fill;
 
   &:backdrop {
-    border-color: $border_color;
+    border-color: $headerbar_border_backdrop;
     background-color: $bg_color;
     background-image: none;
-    //box-shadow: inset 0 1px $top_hilight;
-
     transition: $backdrop_transition;
   }
 
@@ -2408,24 +2406,6 @@ notebook {
 
     tabs { margin: 0px; }
 
-    > tabs > tab {
-      &.reorderable-page {
-        background-color: $shade_color;
-      }
-      @if $variant == 'light' {
-        &.reorderable-page:backdrop { background-color: gtkmix($shade_color, white, 5.3%); }
-      }
-      &:checked {
-        &.reorderable-page {
-          background-color: $active_tab_color;
-          @if $variant == 'light' { &:backdrop { background-color: $backdrop_base_color; } }
-        }
-      }
-      //&:not(:checked) {
-      //  color: transparentize($fg_color, 0.4);
-      //}
-    }
-
     &.top {
       border-bottom-style: solid;
       > tabs {
@@ -2595,19 +2575,20 @@ notebook {
       border-color: transparent; //
 
       &.reorderable-page {
-        box-shadow: inset -1px -1px $headerbar_border;
+        background-color: $tab_color;
+        box-shadow: inset -1px -1px $border_color;
         border: none;
       }
 
       &:hover {
         color: $fg_color;
-        //background-color: darken($shade_color, 3%);
 
         &.reorderable-page {
-          border-color: gtkalpha($borders_color, 0.3);
-          background-color: if($variant == 'light', gtkmix(black, $shade_color, 2%), gtkmix(white, $shade_color, 2.3%));
-          box-shadow: inset -1px -1px $headerbar_border;
+          border-color: $border_color;
+          background-color: $tab_color_hover;
+          box-shadow: inset -1px -1px $border_color;
           transition: background 150ms ease-in-out;
+          &:backdrop { background-color: $tab_color_backdrop_hover; }
         }
       }
 
@@ -2616,8 +2597,8 @@ notebook {
 
         &.reorderable-page {
           border-color: transparent;
-          background-color: if($variant == 'light', $backdrop_dark_fill, $shade_color);
-          box-shadow: inset -1px -1px $borders_color;
+          background-color: $tab_color_backdrop;
+          box-shadow: inset -1px -1px $border_color;
         }
       }
 
@@ -2625,11 +2606,11 @@ notebook {
         color: $fg_color;
         &.reorderable-page {
           border-width: 0;
-          border-color: $headerbar_border;
-          background-color: $active_tab_color;
-          box-shadow: inset -1px -1px $headerbar_border;
+          border-color: $border_color;
+          background-color: $tab_color_active;
+          box-shadow: inset -1px -1px $border_color;
           &:hover {
-            background-color: if($variant == 'light', gtkmix(black, $active_tab_color, 2.3%), gtkmix(white, $active_tab_color, 2.3%));
+            background-color: $tab_color_active_hover;
           }
         }
       }
@@ -2638,9 +2619,9 @@ notebook {
         color: $backdrop_fg_color;
 
         &.reorderable-page {
-          border-color: $backdrop_borders_color;
-          box-shadow: inset -1px -1px $borders_color;
-          background-color: if($variant == 'light', $backdrop_base_color, $active_tab_color);
+          border-color: $border_color;
+          box-shadow: inset -1px -1px $border_color;
+          background-color: $tab_color_backdrop_active;
         }
       }
 

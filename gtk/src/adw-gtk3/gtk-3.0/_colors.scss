@@ -12,7 +12,7 @@ $selected_fg_color: $accent_fg_color;
 $selected_bg_color: $accent_bg_color;
 $selected_borders_color: gtkmix($fg_color, $bg_color, 50%); // TODO
 $borders_color: if($variant == 'light', gtkmix(black, $bg_color, 11.7%), gtkmix(white, $bg_color, 15%));
-$alt_borders_color: $borders_color; // TODO
+$alt_borders_color: darker($borders_color); // TODO
 $borders_edge: if($variant == 'light', gtkalpha(white, 0.5), gtkalpha(currentColor, 0.07));
 //$link_color: if($variant == 'light', darken($selected_bg_color, 10%), lighten($selected_bg_color, 20%));
 //$link_visited_color: if($variant == 'light', darken($selected_bg_color, 20%), lighten($selected_bg_color, 10%));
@@ -78,16 +78,22 @@ $checkradio_bg_color: $selected_bg_color;
 $checkradio_fg_color: $selected_fg_color;
 $checkradio_borders_color: if($variant == 'light', gtkmix(black,$checkradio_bg_color,20%), gtkmix(black,$checkradio_bg_color,40%));
 
-// Other colors from libadwaita
-$headerbar_border: $headerbar_border_color;
-
-// Custom colors TODO
+// Custom colors
+$headerbar_border: if($variant == 'light', gtkshade($bg_color, 0.828), gtkmix(white, $bg_color, 19.7%));
+$headerbar_border_backdrop: if($variant == 'light', gtkshade($bg_color, 0.895), $backdrop_borders_color);
 $notebook_color: $base_color;
-$active_tab_color: if($variant == 'light', gtkmix($shade_color, white, 3.3%), gtkmix($shade_color, white, 4.7%));
+$tab_color: if($variant == 'light', gtkshade($bg_color, 0.902), gtkshade($bg_color, 1.07));
+$tab_color_hover: if($variant == 'light', gtkmix(black, $bg_color, 11.7%), gtkmix(white, $bg_color, 3.7%));
+$tab_color_active: if($variant == 'light', gtkmix(black, $bg_color, 6%), gtkmix(white, $bg_color, 5.7%));
+$tab_color_active_hover: if($variant == 'light', gtkshade($tab_color_active, 0.971), gtkshade($tab_color_active, 1.11));
+$tab_color_backdrop: if($variant == 'light', gtkshade($bg_color, 0.96), gtkmix(black, $bg_color, 21%));
+$tab_color_backdrop_hover: if($variant == 'light', gtkmix(black, $bg_color, 6.7%), gtkshade($bg_color, 0.96));
+$tab_color_backdrop_active: $bg_color;
 
 // titlebuttons
-$titlebutton_normal: gtkmix(currentColor, $headerbar_color, 10%);
-$titlebutton_normal_hover: gtkmix(currentColor, $headerbar_color, 15%);
-$titlebutton_normal_active: gtkmix(currentColor, $headerbar_color, 30%);
-$titlebutton_backdrop: gtkmix(currentColor, $headerbar_color, 5%); //FIXME
-$titlebutton_backdrop_hover: gtkmix(currentColor, $headerbar_color, 8%); //FIXME
+// FIXME: Backdrop state may need adjustments
+$titlebutton_normal: if($variant == 'light', gtkalpha(transparentize(black, .2), .1), gtkalpha(currentColor, .1));
+$titlebutton_normal_hover: if($variant == 'light', gtkalpha(transparentize(black, .2), .15), gtkalpha(currentColor, .15));
+$titlebutton_normal_active: if($variant == 'light', gtkalpha(transparentize(black, .2), .3), gtkalpha(currentColor, .3));
+$titlebutton_backdrop: if($variant == 'light', gtkalpha($backdrop_fg_color, .1), gtkalpha(currentColor, .1));
+$titlebutton_backdrop_hover: if($variant == 'light', gtkalpha($backdrop_fg_color, .15), gtkalpha(currentColor, .15));
