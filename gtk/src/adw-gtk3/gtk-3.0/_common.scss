@@ -9,7 +9,7 @@ $popover_radius: $window_radius;
 $card_radius: $button_radius + 6;
 
 // Optional compact sizes for buttons, headerbar and headerbar widgets
-$_sizevariant: 'default'; //compact otherwise
+$_sizevariant: 'compact'; //compact otherwise
 $_headerbar_height: if($_sizevariant=='default', 46px, 40px);
 $_entry_height: if($_sizevariant=='default', 34px, 28px);
 $_btn_pad: if($_sizevariant=='default', 4px 10px, 2px 6px);
@@ -575,7 +575,7 @@ button {
     border-color: transparent; // Should be in _drawing.scss, but it breaks linked buttons
     border-radius: $button_radius;
     transition: $button_transition;
-    font-weight: bold;
+    //font-weight: bold;
 
     @include button(normal);
 
