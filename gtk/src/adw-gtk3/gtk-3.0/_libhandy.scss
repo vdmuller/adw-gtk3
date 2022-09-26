@@ -691,14 +691,14 @@ tabbar {
 
   .start-action,
   .end-action {
-    background: $tab_color;
-    border-color: $alt_borders_color;
+    background-color: $headerbar_bg_color;
+    border-color: transparent;
     border-style: solid;
-    transition: background 150ms ease-in-out;
+    transition: background-color 150ms ease-in-out;
 
     &:backdrop {
-      border-color: $backdrop_borders_color;
-      background-color: $backdrop_dark_fill;
+      border-color: transparent;
+      background-color: $headerbar_backdrop_color;
     }
 
     button {
@@ -888,3 +888,4 @@ tabbar .tab-indicator:not(.clickable) {
     -GtkWidget-window-dragging: true;
   }
 }
+
