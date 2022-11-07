@@ -2066,7 +2066,6 @@ menubar,
 .menubar {
   -GtkWidget-window-dragging: true;
   padding: 0px;
-  box-shadow: inset 0 -1px $border_color;
 
   &:backdrop { background-color: $backdrop_bg_color; }
 
@@ -2111,6 +2110,8 @@ menu,
   background-color: $menu_color;
   border: 1px solid $borders_color; // adds borders in a non composited env
 
+  separator { margin: 6px 0; }
+
   .csd & {
     border: none; // axes borders in a composited env
     border-radius: $menu_radius;
@@ -2126,7 +2127,7 @@ menu,
     border-radius: $button_radius;
 
     &:hover {
-      color: if($variant == 'light', $fg_color, $selected_fg_color);
+      color: $fg_color;
       background-color: $view_selected_hover_color;
     }
 
@@ -2250,7 +2251,7 @@ popover.background {
     &.osd { @extend %osd; }
   }
 
-  separator { margin: 3px; }
+  separator { margin: 6px 0; }
 
   list separator { margin: 0px; }
 }
