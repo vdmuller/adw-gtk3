@@ -3766,9 +3766,9 @@ separator {
 // * Lists *
 // *********
 list {
-  color: $text_color;
-  background-color: $base_color;
-  border-color: $borders_color;
+  color: $card_fg_color;
+  background-color: $card_bg_color;
+  border-color: $card_shade_color;
 
   row { padding: 2px; }
 }
@@ -4644,7 +4644,7 @@ headerbar.selection-mode button.titlebutton,
 
     @at-root %selected_items_backdrop,
     &:backdrop {
-      color: $backdrop_selected_fg_color;
+      color: $selected_fg_color;
 
       &:disabled { color: gtkmix($backdrop_selected_fg_color, $selected_bg_color, 30%); }
     }
