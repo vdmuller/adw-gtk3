@@ -10,7 +10,7 @@ $card_radius: $button_radius + 6;
 $disabled_opacity: 0.5;
 
 // Optional compact sizes for buttons, headerbar and headerbar widgets
-$_sizevariant: 'compact'; //compact otherwise
+$_sizevariant: 'default'; //compact otherwise
 $_headerbar_height: if($_sizevariant=='default', 46px, 40px);
 $_entry_height: if($_sizevariant=='default', 34px, 28px);
 $_btn_pad: if($_sizevariant=='default', 4px 10px, 2px 6px);
