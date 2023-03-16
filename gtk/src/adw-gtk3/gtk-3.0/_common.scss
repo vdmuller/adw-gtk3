@@ -558,7 +558,7 @@ button {
     border-color: transparent; // Should be in _drawing.scss, but it breaks linked buttons
     border-radius: $button_radius;
     transition: $button_transition;
-    //font-weight: bold;
+    font-weight: bold;
 
     @include button(normal);
 
