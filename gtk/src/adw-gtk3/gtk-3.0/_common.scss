@@ -1003,7 +1003,7 @@ toolbar.inline-toolbar toolbutton {
 %linked_vertical_middle {
   border-top-color: $border_color;
   border-bottom-color: $border_color;
-  border-style: solid solid none solid;
+  border-style: solid none none none;
   border-radius: 0;
   -gtk-outline-radius: 0;
 }
@@ -1065,7 +1065,7 @@ modelbutton.flat,
 
   @extend %undecorated_button;
 
-  &:hover { background-color: $hover_color; }
+  &:hover { background-color: $selected_color; }
 
   &:selected {
     //@extend %selected_items;
@@ -1327,13 +1327,15 @@ spinbutton {
     }
 
     %top_button {
+      border-color: $spinbutton_borders_color;
       border-radius: $button_radius $button_radius 0 0;
-      border-style: solid solid none solid;
+      border-style: none none solid none;
     }
 
     %bottom_button {
+      border-color: $spinbutton_borders_color;
       border-radius: 0 0 $button_radius $button_radius;
-      border-style: none solid solid solid;
+      border-style: solid none none none;
     }
   }
 
@@ -2134,7 +2136,7 @@ menu,
 
     &:hover {
       color: $fg_color;
-      background-color: $hover_color;
+      background-color: $selected_color;
     }
 
     &:disabled {
