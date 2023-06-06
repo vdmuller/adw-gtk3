@@ -1105,13 +1105,20 @@ button.color {
 }
 
 // list buttons
-// tone down as per new designs, see issue #1473, #1748
 list row button.image-button:not(.flat) {
   @extend %undecorated_button;
-  border: 1px solid gtkalpha($borders_color, .5);
-  &:hover { @include button(hover); }
-  &:active,
-  &:checked { @include button(active); }
+  //border: 1px solid gtkalpha($borders_color, .5);
+  &:hover {
+    background-color: $view_hover_color;
+  }
+  &:active {
+    background-color: $view_active_color;
+  }
+  &:checked {
+    background-color: $view_selected_color;
+    &:hover { background-color: $view_selected_hover_color; }
+    &:active { background-color: $view_selected_active_color; }
+  }
 }
 
 // *********
@@ -3740,7 +3747,14 @@ list {
   background-color: $view_bg_color;
   border-color: $card_shade_color;
 
-  row { padding: 2px; }
+  row {
+    padding: 2px;
+    outline-color: $focus_border_color;
+    outline-style: solid;
+    outline-offset: -3px;
+    outline-width: 2px;
+    -gtk-outline-radius: $button-radius;
+  }
 }
 
 row {
@@ -3964,7 +3978,7 @@ filechooserbutton:drop(active) {
 // ***********
 .sidebar {
   border-style: none;
-  background-color: $sidebar_bg_color;
+  background-color: $bg_color;
 
   &:not(separator) {
     @at-root %sidebar_left,
